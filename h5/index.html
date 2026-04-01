@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sukdo H5 Game</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="h5-body">
+    <main class="mobile-shell">
+      <header class="mobile-hero">
+        <p class="eyebrow">SUKDO H5</p>
+        <div class="hero-topline">
+          <div>
+            <h1>手机上也能顺手解一盘</h1>
+            <p class="hero-text">复用原生小程序共享逻辑的 H5 数独游戏，移动端优先，开页就能继续上次进度。</p>
+          </div>
+          <div class="top-links">
+            <a class="ghost-link" href="../index.html">桌面版</a>
+            <a id="h5-solver-link" class="ghost-link accent" href="./solver.html">去解题页</a>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-label">计时</span>
+            <strong id="h5-timer">00:00</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">最佳</span>
+            <strong id="h5-best-time">--:--</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">提示</span>
+            <strong id="h5-hint-count">0</strong>
+          </article>
+        </div>
+      </header>
+
+      <section class="panel-card board-panel">
+        <div class="section-topline">
+          <div>
+            <div class="section-title">当前难度</div>
+            <strong id="h5-difficulty-label" class="section-value">中等</strong>
+          </div>
+          <div id="h5-status-pill" class="helper-pill">继续挑战</div>
+        </div>
+        <div class="board-shell">
+          <div id="h5-game-board" class="board" aria-label="H5 Sudoku board"></div>
+        </div>
+      </section>
+
+      <section class="panel-card controls-panel">
+        <div id="h5-difficulty-buttons"></div>
+        <div id="h5-game-keypad"></div>
+        <div id="h5-action-grid"></div>
+        <p id="h5-game-message" class="message">正在加载 H5 数独游戏…</p>
+      </section>
+
+      <div id="h5-new-game-dialog"></div>
+    </main>
+
+    <script type="module" src="../src/h5/game-page.js"></script>
+  </body>
+</html>

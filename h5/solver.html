@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sukdo H5 Solver</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="h5-body">
+    <main class="mobile-shell solver-shell">
+      <header class="mobile-hero">
+        <p class="eyebrow">SUKDO H5 SOLVER</p>
+        <div class="hero-topline">
+          <div>
+            <h1>把盘面交给求解器慢慢拆给你看</h1>
+            <p class="hero-text">手填、粘贴导入、自动求解和步骤回放都在这里，适合手机上快速核题和教学回看。</p>
+          </div>
+          <div class="top-links">
+            <a class="ghost-link" href="./index.html">返回游戏</a>
+            <a class="ghost-link" href="../solver.html">桌面解题页</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="panel-card">
+        <div class="section-topline">
+          <div class="section-title">题目盘面</div>
+          <div id="h5-solver-progress" class="helper-pill">0 条</div>
+        </div>
+        <div class="board-shell">
+          <div id="h5-solver-board" class="board" aria-label="H5 Sudoku solver board"></div>
+        </div>
+        <div id="h5-solver-keypad"></div>
+      </section>
+
+      <section class="panel-card">
+        <div class="section-topline">
+          <div class="section-title">文本导入</div>
+          <div class="helper-text">支持 0 和 . 表示空格</div>
+        </div>
+        <textarea
+          id="h5-solver-input"
+          class="solver-textarea"
+          rows="5"
+          placeholder="例如：530070000600195000098000060800060003400803001700020006060000280000419005000080079"
+        ></textarea>
+        <div class="action-grid compact-actions">
+          <button id="h5-solver-import" type="button" class="action-button control-chip">导入题目</button>
+          <button id="h5-solver-solve" type="button" class="action-button control-chip primary">自动求解</button>
+          <button id="h5-solver-clear" type="button" class="action-button control-chip">清空全部</button>
+          <button id="h5-solver-sample" type="button" class="action-button control-chip">载入示例</button>
+        </div>
+        <p id="h5-solver-message" class="message">正在加载 H5 解题页…</p>
+      </section>
+
+      <section class="panel-card guide-panel">
+        <div class="section-topline">
+          <div class="section-title">解题步骤</div>
+          <div id="h5-solver-step-count" class="helper-pill">0</div>
+        </div>
+        <h2 id="h5-solver-guide-title" class="guide-title">解题步骤</h2>
+        <p id="h5-solver-guide-description" class="guide-description">求解后可以从头逐步查看机器的推演过程。</p>
+        <div id="h5-solver-guide-controls" class="action-grid compact-actions"></div>
+        <ol id="h5-solver-steps" class="solver-steps"></ol>
+      </section>
+    </main>
+
+    <script type="module" src="../src/h5/solver-page.js"></script>
+  </body>
+</html>

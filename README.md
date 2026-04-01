@@ -29,10 +29,22 @@ http://localhost:4173
 http://localhost:4173/index.html
 ```
 
+H5 游戏页：
+
+```text
+http://localhost:4173/h5/index.html
+```
+
 自动解题页：
 
 ```text
 http://localhost:4173/solver.html
+```
+
+H5 解题页：
+
+```text
+http://localhost:4173/h5/solver.html
 ```
 
 你也可以在游戏主页点击“把这题带去解题器”，把当前局的原题直接带到 solver 页面继续分析。
@@ -46,6 +58,8 @@ http://localhost:4173/solver.html
 - `src/sudoku.js`
 - `src/solver-main.js`
 - `src/solver-view.js`
+
+H5 版本会直接复用 `miniapps/shared` 中给原生小程序准备的共享 controller / view model / 数独引擎逻辑，再由 `src/h5` 里的浏览器适配层负责页面渲染、存储和导航。
 
 ## 原生小程序实现
 

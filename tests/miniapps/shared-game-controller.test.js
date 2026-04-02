@@ -134,6 +134,30 @@ test('shared game controller page data distinguishes fixed, player-entry, same-v
   assert.equal(data.statusPillText, '试填模式');
 });
 
+test('shared game controller highlights matching digits after keypad input even when the board stays unchanged', () => {
+  const board = Array.from({ length: 9 }, () => Array(9).fill(0));
+  board[2][2] = 5;
+
+  const controller = createGameController(
+    createPlatform({
+      session: createSnapshot({
+        board,
+        notesMode: true,
+        selectedCell: { row: 0, col: 0 }
+      })
+    })
+  );
+
+  controller.init();
+  const data = controller.enterDigit(5);
+  const sameValueCell = data.cells.find((cell) => cell.row === 2 && cell.col === 2);
+
+  assert.deepEqual(controller.getState().notes[0][0], [5]);
+  assert.equal(controller.getState().board[0][0], 0);
+  assert.equal(controller.getState().activeDigit, 5);
+  assert.equal(sameValueCell.sameValue, true);
+});
+
 test('shared game controller openSolver serializes the original puzzle instead of the live board state', () => {
   const puzzle = Array.from({ length: 9 }, () => Array(9).fill(0));
   const board = Array.from({ length: 9 }, () => Array(9).fill(0));

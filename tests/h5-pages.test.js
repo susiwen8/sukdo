@@ -108,3 +108,8 @@ test('h5 game page uses a compact hero without legacy stats cards', () => {
   assert.doesNotMatch(h5Styles, /\.stats-grid\s*\{/);
   assert.doesNotMatch(h5Styles, /\.stat-card\s*\{/);
 });
+
+test('h5 same-value cells keep a distinct visual emphasis beyond the shared background tint', () => {
+  assert.match(h5Styles, /\.cell\.same-value\s*\{[^}]*background:/);
+  assert.match(h5Styles, /\.cell\.same-value\s*\{[^}]*box-shadow:/);
+});

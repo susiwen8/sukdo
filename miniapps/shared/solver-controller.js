@@ -154,6 +154,20 @@ function createSolverController(options = {}) {
 
       return data();
     },
+    jumpToGuideStep(index) {
+      if (state.analysis?.status === 'solved' && state.analysis.steps.length) {
+        const nextIndex = Number(index);
+
+        if (Number.isFinite(nextIndex)) {
+          state.guideStepIndex = Math.max(
+            0,
+            Math.min(Math.trunc(nextIndex), state.analysis.steps.length - 1)
+          );
+        }
+      }
+
+      return data();
+    },
     showGuideSolution() {
       if (state.analysis?.status === 'solved' && state.analysis.steps.length) {
         state.guideStepIndex = state.analysis.steps.length - 1;

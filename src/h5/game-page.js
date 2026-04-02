@@ -1,4 +1,5 @@
 import { loadCommonJsModule } from './commonjs-runtime.js';
+import { getBootstrapErrorMessage, queryRequiredElements } from './page-bootstrap.js';
 import { buildSolverHref, createGamePlatform } from './platform.js';
 import {
   renderDifficultyButtons,
@@ -12,27 +13,31 @@ import {
 const SHARED_GAME_CONTROLLER_URL = new URL('../../miniapps/shared/game-controller.js', import.meta.url).toString();
 const SHARED_NEW_GAME_FLOW_URL = new URL('../../miniapps/shared/new-game-flow.js', import.meta.url).toString();
 
-const elements = {
-  timer: document.querySelector('#h5-timer'),
-  bestTime: document.querySelector('#h5-best-time'),
-  hintCount: document.querySelector('#h5-hint-count'),
-  difficultyLabel: document.querySelector('#h5-difficulty-label'),
-  statusPill: document.querySelector('#h5-status-pill'),
-  board: document.querySelector('#h5-game-board'),
-  difficultyButtons: document.querySelector('#h5-difficulty-buttons'),
-  keypad: document.querySelector('#h5-game-keypad'),
-  actions: document.querySelector('#h5-action-grid'),
-  message: document.querySelector('#h5-game-message'),
-  solverLink: document.querySelector('#h5-solver-link'),
-  dialog: document.querySelector('#h5-new-game-dialog')
-};
-
 let controller = null;
 let currentData = null;
+let elements = null;
 let dialogState = {
   newGameDialogVisible: false
 };
 let newGameFlow = null;
+
+function getElements() {
+  return queryRequiredElements(
+    {
+      timer: '#h5-timer',
+      difficultyLabel: '#h5-difficulty-label',
+      statusPill: '#h5-status-pill',
+      board: '#h5-game-board',
+      difficultyButtons: '#h5-difficulty-buttons',
+      keypad: '#h5-game-keypad',
+      actions: '#h5-action-grid',
+      message: '#h5-game-message',
+      solverLink: '#h5-solver-link',
+      dialog: '#h5-new-game-dialog'
+    },
+    { pageName: 'H5 数独页' }
+  );
+}
 
 function render(nextData = currentData) {
   if (!nextData) {
@@ -41,8 +46,6 @@ function render(nextData = currentData) {
 
   currentData = nextData;
   elements.timer.textContent = nextData.timerText;
-  elements.bestTime.textContent = nextData.bestTimeText;
-  elements.hintCount.textContent = nextData.hintCountText;
   elements.difficultyLabel.textContent = nextData.difficultyLabel;
   elements.statusPill.textContent = nextData.statusPillText;
   elements.statusPill.classList.toggle('completed', nextData.statusPillCompleted);
@@ -214,11 +217,19 @@ function bindEvents() {
 }
 
 function renderFatalError(error) {
-  const message = error instanceof Error ? error.message : 'H5 页面初始化失败。';
-  elements.message.textContent = message;
+  const messageElement = elements?.message ?? document.querySelector('#h5-game-message');
+  const message = getBootstrapErrorMessage(error, 'H5 页面初始化失败，请刷新页面后重试。');
+
+  if (messageElement) {
+    messageElement.textContent = message;
+  }
+
+  console.error(error);
 }
 
 async function bootstrap() {
+  elements = getElements();
+
   const [{ createGameController }, loadedNewGameFlow] = await Promise.all([
     loadCommonJsModule(SHARED_GAME_CONTROLLER_URL),
     loadCommonJsModule(SHARED_NEW_GAME_FLOW_URL)

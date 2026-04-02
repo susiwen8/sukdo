@@ -54,9 +54,14 @@
       <view class="action-button control-chip subtle {{guideCanGoNext ? '' : 'disabled'}}" bindtap="handleNextGuideStep">下一步</view>
       <view class="action-button control-chip" bindtap="handleShowGuideSolution">最终答案</view>
     </view>
-    <scroll-view class="steps" scroll-y="{{true}}">
+    <scroll-view class="steps" scroll-y="{{true}}" scroll-into-view="{{guideScrollTargetId}}">
       <block wx:for="{{steps}}" wx:key="key">
-        <view class="step-item {{item.active ? 'active' : ''}} {{item.done ? 'done' : ''}}">
+        <view
+          id="{{item.key}}"
+          class="step-item {{item.active ? 'active' : ''}} {{item.done ? 'done' : ''}}"
+          data-step-index="{{item.index}}"
+          bindtap="handleJumpToGuideStep"
+        >
           {{item.text}}
         </view>
       </block>

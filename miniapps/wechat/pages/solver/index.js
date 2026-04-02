@@ -33,7 +33,8 @@ Page({
     inputText: '',
     message: '',
     resultSolved: false,
-    stepCountText: '0'
+    stepCountText: '0',
+    guideScrollTargetId: ''
   },
   onLoad(options) {
     const queryPuzzle = options?.puzzle ? decodeURIComponent(options.puzzle) : '';
@@ -156,6 +157,10 @@ Page({
   },
   handleNextGuideStep() {
     syncPage(this, this.controller.nextGuideStep());
+  },
+  handleJumpToGuideStep(event) {
+    const { stepIndex } = event.currentTarget.dataset;
+    syncPage(this, this.controller.jumpToGuideStep(Number(stepIndex)));
   },
   handleShowGuideSolution() {
     syncPage(this, this.controller.showGuideSolution());

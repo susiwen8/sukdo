@@ -192,11 +192,13 @@ function buildSolverPageData(state) {
     guideStepIndex,
     guideStepTitle: activeGuideStep?.title ?? '',
     guideStepDescription: activeGuideStep?.description ?? '',
+    guideScrollTargetId: activeGuideStep?.key ?? '',
     guideProgressText: activeGuideStep ? `${guideStepIndex + 1} / ${guideTimeline.length}` : '',
     guideCanGoPrev: activeGuideStep ? guideStepIndex > 0 : false,
     guideCanGoNext: activeGuideStep ? guideStepIndex < guideTimeline.length - 1 : false,
     steps: guideTimeline.map((step, index) => ({
       key: step.key,
+      index,
       text: step.text,
       title: step.title,
       active: guideStepIndex === index,

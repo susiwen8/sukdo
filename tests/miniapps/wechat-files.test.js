@@ -157,6 +157,12 @@ test('wechat solver page uses the shared controller and exposes image import and
   assert.match(template, /stepCountText/);
   assert.match(template, /guideStepDescription/);
   assert.match(template, /guideProgressText/);
+  assert.match(template, /scroll-into-view="\{\{guideScrollTargetId\}\}"/);
+  assert.match(template, /id="\{\{item\.key\}\}"/);
+  assert.match(template, /bindtap="handleJumpToGuideStep"/);
+  assert.match(template, /data-step-index="\{\{item\.index\}\}"/);
+  assert.match(script, /guideScrollTargetId/);
+  assert.match(script, /handleJumpToGuideStep/);
   assert.doesNotMatch(template, /class="keypad"/);
   assert.doesNotMatch(template, /求解结果/);
   assert.doesNotMatch(template, /textarea/);

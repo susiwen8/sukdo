@@ -118,6 +118,7 @@ test('shared solver controller can load the sample puzzle and solve it', () => {
   assert.equal(data.guideAvailable, true);
   assert.equal(data.guideCanGoNext, false);
   assert.equal(data.guideStepIndex, data.steps.length - 1);
+  assert.equal(data.guideScrollTargetId, data.steps[data.steps.length - 1].key);
 });
 
 test('shared solver controller can replay a solved puzzle step by step for teaching', () => {
@@ -137,6 +138,7 @@ test('shared solver controller can replay a solved puzzle step by step for teach
   assert.equal(data.guideCanGoNext, true);
   assert.match(data.guideProgressText, /1\s*\/\s*\d+/);
   assert.match(data.guideStepDescription, /只能填|候选|试填|回退/);
+  assert.equal(data.guideScrollTargetId, data.steps[0].key);
   assert.equal(Boolean(firstStepCell), true);
   assert.notEqual(firstStepCell.displayValue, '');
   assert.equal(firstStepCell.guideFocus, true);
@@ -145,13 +147,47 @@ test('shared solver controller can replay a solved puzzle step by step for teach
   data = controller.nextGuideStep();
   assert.equal(data.guideStepIndex, 1);
   assert.equal(data.guideCanGoPrev, true);
+  assert.equal(data.guideScrollTargetId, data.steps[1].key);
 
   data = controller.prevGuideStep();
   assert.equal(data.guideStepIndex, 0);
+  assert.equal(data.guideScrollTargetId, data.steps[0].key);
 
   data = controller.showGuideSolution();
   assert.equal(data.guideCanGoNext, false);
   assert.equal(data.guideStepIndex, data.steps.length - 1);
+  assert.equal(data.guideScrollTargetId, data.steps[data.steps.length - 1].key);
+});
+
+test('shared solver controller can jump directly to a chosen guide step', () => {
+  const controller = createSolverController();
+
+  controller.init();
+  controller.loadSample();
+  controller.solve();
+
+  const data = controller.jumpToGuideStep(3);
+  const focusedCell = data.cells.find((cell) => cell.guideFocus);
+
+  assert.equal(data.guideAvailable, true);
+  assert.equal(data.guideStepIndex, 3);
+  assert.equal(data.guideStepTitle, '第 4 步 · 唯一候选');
+  assert.equal(data.guideProgressText, `4 / ${data.steps.length}`);
+  assert.equal(data.guideScrollTargetId, data.steps[3].key);
+  assert.equal(data.steps[3].active, true);
+  assert.equal(data.steps[0].done, true);
+  assert.deepEqual(
+    focusedCell && {
+      row: focusedCell.row,
+      col: focusedCell.col,
+      displayValue: focusedCell.displayValue
+    },
+    {
+      row: 4,
+      col: 2,
+      displayValue: '6'
+    }
+  );
 });
 
 test('shared solver controller reports multiple solutions without returning a solved board', () => {
@@ -189,4 +225,5 @@ test('shared solver controller clear resets the board, input, and analysis', () 
   assert.equal(data.steps.length, 0);
   assert.equal(data.resultSolved, false);
   assert.equal(data.guideAvailable, false);
+  assert.equal(data.guideScrollTargetId, '');
 });

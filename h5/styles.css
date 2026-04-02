@@ -17,6 +17,7 @@
   --radius-lg: 1.375rem;
   --radius-md: 1rem;
   --radius-sm: 0.875rem;
+  --solver-step-preview-height: 3.2rem;
 }
 
 * {
@@ -60,6 +61,10 @@ button {
   gap: 0.75rem;
 }
 
+.solver-shell {
+  min-height: calc(100dvh - max(1rem, env(safe-area-inset-top)) - max(1.5rem, env(safe-area-inset-bottom)));
+}
+
 .mobile-hero,
 .panel-card {
   border-radius: var(--radius-xl);
@@ -70,6 +75,18 @@ button {
 
 .mobile-hero {
   padding: 1rem;
+}
+
+.compact-hero {
+  padding: 0.9rem;
+}
+
+.solver-hero {
+  padding: 0.7rem;
+}
+
+.game-hero {
+  padding: 0.7rem;
 }
 
 .eyebrow {
@@ -86,12 +103,38 @@ button {
   gap: 0.9rem;
 }
 
+.compact-topline {
+  align-items: flex-start;
+}
+
+.solver-hero .hero-topline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.game-hero .hero-topline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
 .hero-topline h1 {
   margin: 0;
   font-family: "Georgia", "Palatino Linotype", serif;
   font-size: clamp(1.9rem, 7vw, 2.8rem);
   line-height: 1;
   letter-spacing: -0.04em;
+}
+
+.solver-hero .hero-topline h1 {
+  font-size: clamp(1.45rem, 5.4vw, 2rem);
+}
+
+.game-hero .hero-topline h1 {
+  font-size: clamp(1.45rem, 5.4vw, 2rem);
 }
 
 .hero-text {
@@ -120,23 +163,21 @@ button {
   font-weight: 700;
 }
 
+.solver-hero .ghost-link {
+  min-height: 2.3rem;
+  padding: 0 0.85rem;
+  font-size: 0.9rem;
+}
+
+.game-hero .ghost-link {
+  min-height: 2.3rem;
+  padding: 0 0.85rem;
+  font-size: 0.9rem;
+}
+
 .ghost-link.accent {
   color: #fffaf3;
   background: var(--accent);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem;
-  margin-top: 0.9rem;
-}
-
-.stat-card {
-  padding: 0.85rem 0.9rem;
-  border-radius: var(--radius-md);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 236, 0.92));
-  border: 1px solid rgba(23, 49, 58, 0.08);
 }
 
 .stat-label,
@@ -149,7 +190,6 @@ button {
   font-weight: 700;
 }
 
-.stat-card strong,
 .section-value {
   display: block;
   margin-top: 0.35rem;
@@ -162,11 +202,25 @@ button {
   padding: 0.9rem;
 }
 
+.solver-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .section-topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+}
+
+.board-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  flex-wrap: wrap;
 }
 
 .helper-pill,
@@ -209,6 +263,7 @@ button {
   aspect-ratio: 1;
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(9, minmax(0, 1fr));
   border: 1px solid rgba(20, 45, 53, 0.2);
   border-radius: 1.15rem;
   overflow: hidden;
@@ -216,7 +271,7 @@ button {
 }
 
 .cell {
-  min-height: clamp(2.5rem, 9vw, 4.2rem);
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,6 +385,14 @@ button {
   margin-top: 0.75rem;
 }
 
+.hero-actions {
+  margin-top: 0.85rem;
+}
+
+.solver-hero .hero-actions {
+  margin-top: 0.6rem;
+}
+
 .compact-actions {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -346,6 +409,11 @@ button {
   text-align: center;
   font-size: 0.98rem;
   font-weight: 700;
+}
+
+.solver-hero .control-chip {
+  min-height: 2.65rem;
+  font-size: 0.93rem;
 }
 
 .difficulty-pill {
@@ -399,6 +467,13 @@ button {
   font-size: 0.94rem;
 }
 
+.solver-hero .message {
+  margin-top: 0.6rem;
+  padding: 0.7rem 0.8rem;
+  line-height: 1.45;
+  font-size: 0.9rem;
+}
+
 .solver-textarea {
   width: 100%;
   margin-top: 0.75rem;
@@ -414,15 +489,18 @@ button {
   background: linear-gradient(180deg, rgba(255, 249, 237, 0.98), rgba(252, 245, 231, 0.98));
 }
 
-.guide-title {
-  margin: 0.8rem 0 0;
-  font-size: 1.2rem;
+.solver-board-panel {
+  flex: none;
 }
 
-.guide-description {
-  margin: 0.45rem 0 0;
-  color: var(--ink-soft);
-  line-height: 1.6;
+.solver-board-panel .board-shell {
+  max-width: min(100%, clamp(15rem, calc(100dvh - 26rem), 22rem));
+  margin-inline: auto;
+}
+
+.solver-guide-panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .solver-steps {
@@ -432,8 +510,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  max-height: 18rem;
+  max-height: calc(var(--solver-step-preview-height) * 3 + 1.4rem);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.2rem;
 }
 
 .solver-step {
@@ -442,6 +522,10 @@ button {
   background: rgba(255, 255, 255, 0.92);
   color: rgba(23, 49, 58, 0.78);
   line-height: 1.55;
+}
+
+.solver-step {
+  scroll-margin-block: 1rem;
 }
 
 .solver-step.active {
@@ -553,6 +637,10 @@ button {
     flex-direction: row;
     justify-content: space-between;
     align-items: end;
+  }
+
+  .compact-topline {
+    align-items: center;
   }
 
   .action-grid {

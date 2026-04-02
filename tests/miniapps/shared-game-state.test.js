@@ -198,6 +198,7 @@ test('shared createSnapshot and restoreGameState round-trip a playable session',
   assert.equal(restored?.difficulty, 'hard');
   assert.equal(restored?.elapsedSeconds, 12);
   assert.deepEqual(restored?.notes[0][2], [4]);
+  assert.equal(restored?.activeDigit, 4);
   assert.deepEqual(restored?.selectedCell, { row: 0, col: 2 });
 });
 

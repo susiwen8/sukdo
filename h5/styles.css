@@ -306,7 +306,8 @@ button {
 }
 
 .cell.same-value {
-  background: rgba(23, 49, 58, 0.1);
+  background: rgba(47, 124, 125, 0.18);
+  box-shadow: inset 0 0 0 2px rgba(23, 49, 58, 0.18);
 }
 
 .cell.trace-origin {

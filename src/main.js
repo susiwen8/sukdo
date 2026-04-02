@@ -117,7 +117,10 @@ function isPeerCell(first, second) {
 }
 
 function renderBoard() {
-  const selectedValue = state.board[state.selectedCell.row][state.selectedCell.col];
+  const highlightedValue =
+    Number.isInteger(state.activeDigit) && state.activeDigit >= 1 && state.activeDigit <= 9
+      ? state.activeDigit
+      : state.board[state.selectedCell.row][state.selectedCell.col];
   const markup = [];
 
   for (let row = 0; row < 9; row += 1) {
@@ -129,7 +132,8 @@ function renderBoard() {
       const prefillEntry = state.prefills[row][col] > 0;
       const selected = state.selectedCell.row === row && state.selectedCell.col === col;
       const related = !selected && isPeerCell(state.selectedCell, { row, col });
-      const sameValue = selectedValue !== 0 && !selected && value === selectedValue;
+      const sameValue =
+        highlightedValue !== 0 && highlightedValue !== null && !selected && value === highlightedValue;
       const traceOrigin =
         state.traceCell?.row === row && state.traceCell?.col === col;
       const classes = ['cell'];

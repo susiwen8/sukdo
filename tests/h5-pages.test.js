@@ -61,9 +61,9 @@ test('h5/solver.html exists and exposes the solver anchors', () => {
   assert.match(html, /src="\.\.\/src\/h5\/solver-page\.js\?v=[^"]+"/);
 });
 
-test('existing desktop pages link to the H5 experience for discovery', () => {
+test('desktop entry page links to the H5 experience, while the desktop solver page stays focused', () => {
   assert.match(desktopIndexHtml, /href="\.\/h5\/index\.html"/);
-  assert.match(desktopSolverHtml, /href="\.\/h5\/solver\.html"/);
+  assert.doesNotMatch(desktopSolverHtml, /href="\.\/h5\/solver\.html"/);
 });
 
 test('h5 board uses explicit square tracks without clipping the last row', () => {

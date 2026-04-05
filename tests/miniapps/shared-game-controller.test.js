@@ -131,6 +131,7 @@ test('shared game controller page data distinguishes fixed, player-entry, same-v
   assert.equal(sameValueCell.sameValue, true);
   assert.equal(prefillCell.prefillEntry, true);
   assert.equal(prefillCell.traceOrigin, true);
+  assert.equal(data.activeDigit, 5);
   assert.equal(data.statusPillText, '试填模式');
 });
 

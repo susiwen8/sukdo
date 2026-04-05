@@ -58,6 +58,7 @@ Page({
   data: {
     cells: [],
     keypadDigits: [],
+    activeDigit: null,
     timerText: '00:00',
     bestTimeText: '--:--',
     hintCountText: '0',

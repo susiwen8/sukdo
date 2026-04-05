@@ -70,7 +70,7 @@ function getMessage(state) {
 }
 
 function buildGamePageData(state, bestTimes) {
-  const highlightedValue =
+  const activeDigit =
     Number.isInteger(state.activeDigit) && state.activeDigit >= 1 && state.activeDigit <= 9
       ? state.activeDigit
       : state.board[state.selectedCell.row][state.selectedCell.col];
@@ -85,7 +85,7 @@ function buildGamePageData(state, bestTimes) {
       const prefillEntry = state.prefills[row][col] > 0;
       const selected = state.selectedCell.row === row && state.selectedCell.col === col;
       const related = !selected && isPeerCell(state.selectedCell, { row, col });
-      const sameValue = highlightedValue !== 0 && highlightedValue !== null && !selected && value === highlightedValue;
+      const sameValue = activeDigit !== 0 && activeDigit !== null && !selected && value === activeDigit;
       const traceOrigin = state.traceCell?.row === row && state.traceCell?.col === col;
 
       cells.push({
@@ -112,6 +112,7 @@ function buildGamePageData(state, bestTimes) {
   return {
     cells,
     keypadDigits: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    activeDigit: activeDigit || null,
     timerText: formatTime(state.elapsedSeconds),
     bestTimeText:
       bestTimes[state.difficulty] === null ? '--:--' : formatTime(bestTimes[state.difficulty]),

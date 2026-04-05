@@ -116,11 +116,16 @@ function isPeerCell(first, second) {
   );
 }
 
+function getHighlightedDigit() {
+  const selectedValue = state.board[state.selectedCell.row]?.[state.selectedCell.col] ?? 0;
+
+  return Number.isInteger(state.activeDigit) && state.activeDigit >= 1 && state.activeDigit <= 9
+    ? state.activeDigit
+    : selectedValue;
+}
+
 function renderBoard() {
-  const highlightedValue =
-    Number.isInteger(state.activeDigit) && state.activeDigit >= 1 && state.activeDigit <= 9
-      ? state.activeDigit
-      : state.board[state.selectedCell.row][state.selectedCell.col];
+  const highlightedValue = getHighlightedDigit();
   const markup = [];
 
   for (let row = 0; row < 9; row += 1) {
@@ -170,10 +175,11 @@ function renderBoard() {
 
 function renderKeypad() {
   const buttons = [];
+  const activeDigit = getHighlightedDigit();
 
   for (let value = 1; value <= 9; value += 1) {
     buttons.push(
-      `<button class="keypad-button digit" data-digit="${value}" aria-label="填入 ${value}">${value}</button>`
+      `<button class="keypad-button digit${activeDigit === value ? ' active' : ''}" data-digit="${value}" aria-label="填入 ${value}">${value}</button>`
     );
   }
 

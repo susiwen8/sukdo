@@ -8,14 +8,6 @@ function createConflictIndex(conflicts) {
   return index;
 }
 
-function getStepLabel(step) {
-  return `第 ${step.row + 1} 行第 ${step.col + 1} 列`;
-}
-
-function formatCandidateList(candidates) {
-  return Array.isArray(candidates) && candidates.length ? candidates.join(' / ') : '';
-}
-
 function getGuideStepTitle(step, index) {
   const order = `第 ${index + 1} 步`;
 
@@ -119,7 +111,6 @@ export function buildGuideTimeline(board, steps) {
       type: step.type,
       text: formatSolverStep(step, index),
       title: getGuideStepTitle(step, index),
-      candidateText: formatCandidateList(step.candidates),
       board: workingBoard.map((row) => [...row])
     };
   });

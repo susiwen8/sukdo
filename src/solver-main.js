@@ -167,8 +167,11 @@ if (Object.values(elements).every(Boolean)) {
           id="${step.key}"
           class="solver-step${step.active ? ' active' : ''}${step.done ? ' done' : ''}"
           data-step-index="${step.index}"
+        ><button
+          type="button"
+          class="solver-step-button"
           title="${step.title}"
-        >${step.text}</li>`
+        >${step.text}</button></li>`
       )
       .join('');
     elements.stepCount.textContent = String(state.analysis.steps.length);

@@ -73,6 +73,13 @@ function getStepClassNames(markup, index) {
   return match?.[1] ?? '';
 }
 
+function getStepButtonMarkup(markup, index) {
+  const items = markup.match(/<li[\s\S]*?<\/li>/g) ?? [];
+  const target = items.find((item) => item.includes(`data-step-index="${index}"`)) ?? '';
+  const button = target.match(/<button[\s\S]*?<\/button>/);
+  return button?.[0] ?? '';
+}
+
 function createHarness() {
   const windowListeners = {};
   const selectors = {
@@ -164,6 +171,21 @@ test('solver-main lets the user click a solve step to replay that moment on the 
   assert.doesNotMatch(
     getButtonMarkup(selectors['#solver-board'].innerHTML, '输入第 9 行第 7 列'),
     />1</
+  );
+});
+
+test('solver-main renders each solve step as a focusable button for keyboard users', async () => {
+  const { selectors } = createHarness();
+
+  await import(`../src/solver-main.js?test=${Date.now()}-guide-step-button`);
+
+  selectors['#solver-sample'].listeners.click[0]();
+  selectors['#solver-solve'].listeners.click[0]();
+
+  assert.match(getStepButtonMarkup(selectors['#solver-steps'].innerHTML, 0), /<button/);
+  assert.match(
+    getStepButtonMarkup(selectors['#solver-steps'].innerHTML, 0),
+    /class="solver-step-button"/
   );
 });
 

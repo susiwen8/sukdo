@@ -60,11 +60,13 @@ test('renderGameControls marks active difficulty and action states', async () =>
       { value: 'hard', label: '困难', active: false }
     ],
     keypadDigits: [1, 2, 3],
+    activeDigit: 2,
     notesMode: true,
     prefillMode: false
   });
 
   assert.match(html, /data-difficulty="medium"[\s\S]*difficulty-pill active/);
+  assert.match(html, /data-digit="2"[\s\S]*keypad-button control-chip subtle active/);
   assert.match(html, /data-digit="3"/);
   assert.match(html, /data-action="notes"[\s\S]*control-chip primary/);
   assert.match(html, /data-action="prefill"[\s\S]*control-chip"/);

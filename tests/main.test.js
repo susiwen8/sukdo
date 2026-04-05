@@ -227,6 +227,7 @@ test('main.js distinguishes player-entered digits and highlights matching values
     getButtonClassNames(selectors['#board'].innerHTML, '第 3 行第 3 列'),
     /\bsame-value\b/
   );
+  assert.match(selectors['#keypad'].innerHTML, /class="keypad-button digit active"[^>]*data-digit="5"/);
 });
 
 test('main.js highlights matching values after keypad input even when notes mode keeps the cell empty', async () => {
@@ -255,6 +256,7 @@ test('main.js highlights matching values after keypad input even when notes mode
     getButtonClassNames(selectors['#board'].innerHTML, '第 3 行第 3 列'),
     /\bsame-value\b/
   );
+  assert.match(selectors['#keypad'].innerHTML, /class="keypad-button digit active"[^>]*data-digit="5"/);
 });
 
 test('main.js renders tentative fills and traced origin markers', async () => {

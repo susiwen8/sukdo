@@ -78,6 +78,7 @@ export function renderDigitKeypad(digits, options = {}) {
   const extraButtons = options.extraButtons ?? [];
   const subtle = options.subtle ?? false;
   const extraClass = subtle ? 'subtle' : '';
+  const activeDigit = options.activeDigit ?? null;
 
   return `
     <div class="${escapeHtml(options.className ?? 'keypad')}">
@@ -87,7 +88,12 @@ export function renderDigitKeypad(digits, options = {}) {
             <button
               type="button"
               data-digit="${digit}"
-              class="${joinClasses(['keypad-button', 'control-chip', extraClass])}"
+              class="${joinClasses([
+                'keypad-button',
+                'control-chip',
+                extraClass,
+                activeDigit === digit && 'active'
+              ])}"
             >${digit}</button>
           `
         )
@@ -139,7 +145,7 @@ export function renderGameActionGrid(data) {
 export function renderGameControls(data) {
   return [
     renderDifficultyButtons(data.difficultyOptions),
-    renderDigitKeypad(data.keypadDigits, { subtle: true }),
+    renderDigitKeypad(data.keypadDigits, { subtle: true, activeDigit: data.activeDigit }),
     renderGameActionGrid(data)
   ].join('');
 }

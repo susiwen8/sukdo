@@ -51,7 +51,10 @@ function render(nextData = currentData) {
   elements.statusPill.classList.toggle('completed', nextData.statusPillCompleted);
   elements.board.innerHTML = renderGameBoard(nextData.cells);
   elements.difficultyButtons.innerHTML = renderDifficultyButtons(nextData.difficultyOptions);
-  elements.keypad.innerHTML = renderDigitKeypad(nextData.keypadDigits, { subtle: true });
+  elements.keypad.innerHTML = renderDigitKeypad(nextData.keypadDigits, {
+    subtle: true,
+    activeDigit: nextData.activeDigit
+  });
   elements.actions.innerHTML = renderGameActionGrid(nextData);
   elements.message.innerHTML = renderStatusMessage(nextData.message);
   elements.dialog.innerHTML = renderNewGameDialog(dialogState);

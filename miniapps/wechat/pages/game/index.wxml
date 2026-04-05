@@ -41,7 +41,11 @@
 
     <view class="keypad">
       <block wx:for="{{keypadDigits}}" wx:key="*this">
-        <view class="keypad-button control-chip subtle" data-digit="{{item}}" bindtap="handleDigitTap">{{item}}</view>
+        <view
+          class="keypad-button control-chip subtle {{activeDigit === item ? 'active' : ''}}"
+          data-digit="{{item}}"
+          bindtap="handleDigitTap"
+        >{{item}}</view>
       </block>
     </view>
 

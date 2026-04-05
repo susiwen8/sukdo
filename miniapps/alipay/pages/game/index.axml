@@ -38,7 +38,13 @@
     </view>
 
     <view class="keypad">
-      <view a:for="{{keypadDigits}}" a:key="*this" class="keypad-button control-chip subtle" data-digit="{{item}}" onTap="handleDigitTap">{{item}}</view>
+      <view
+        a:for="{{keypadDigits}}"
+        a:key="*this"
+        class="keypad-button control-chip subtle {{activeDigit === item ? 'active' : ''}}"
+        data-digit="{{item}}"
+        onTap="handleDigitTap"
+      >{{item}}</view>
     </view>
 
     <view class="action-grid">
